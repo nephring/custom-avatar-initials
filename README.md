@@ -1,1 +1,1 @@
-# react-avatar-generator
+WORK IN PROGRESS
