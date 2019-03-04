@@ -23,12 +23,21 @@ class AvatarInitials extends HTMLElement {
 
     this.shadow = this.attachShadow({ mode: 'open' })
     this.defaultAttributes = {
-      initials: 'AB'
+      initials: 'AB',
+      string: 'John Smith Adam Lol'
     }
   }
 
   static get observedAttributes() {
     return ['initials']
+  }
+
+  _hasInitials() {
+    return this.hasAttribute('initials')
+  }
+
+  _hasString() {
+    return this.hasAttribute('string')
   }
 
   connectedCallback() {
@@ -39,14 +48,25 @@ class AvatarInitials extends HTMLElement {
     this.setAttribute('initials', this.initials)
   }
 
-  shortenInitials() {
-    return this.initials.substring(0, 3)
+  shortenInitials(initials) {
+    return initials.substring(0, 3)
+  }
+
+  getInitialsFromString() {
+    return this.string
+      .split(' ')
+      .map(value => value.charAt(0))
+      .join('')
+  }
+
+  getText() {
+    // TODO initials vs string priority
   }
 
   render() {
     const template = document.createElement('template')
 
-    const initials = this.shortenInitials()
+    const text = this.getText()
 
     template.innerHTML = `
       <style>
@@ -71,7 +91,7 @@ class AvatarInitials extends HTMLElement {
         }
       </style>
       <div class="avatar">
-        <div class="text">${initials}</div>
+        <div class="text">${text}</div>
       </div>
   `
 
@@ -81,6 +101,10 @@ class AvatarInitials extends HTMLElement {
 
   get initials() {
     return this.getAttribute('initials') || this.defaultAttributes.initials
+  }
+
+  get string() {
+    return this.getAttribute('string') || this.defaultAttributes.string
   }
 }
 
