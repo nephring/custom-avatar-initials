@@ -22,15 +22,31 @@ class AvatarInitials extends HTMLElement {
     super()
 
     this.shadow = this.attachShadow({ mode: 'open' })
-    console.log(this)
+    this.defaultAttributes = {
+      initials: 'AB'
+    }
+  }
+
+  static get observedAttributes() {
+    return ['initials']
   }
 
   connectedCallback() {
     this.render()
   }
 
+  setAttributes() {
+    this.setAttribute('initials', this.initials)
+  }
+
+  shortenInitials() {
+    return this.initials.substring(0, 3)
+  }
+
   render() {
     const template = document.createElement('template')
+
+    const initials = this.shortenInitials()
 
     template.innerHTML = `
       <style>
@@ -55,11 +71,16 @@ class AvatarInitials extends HTMLElement {
         }
       </style>
       <div class="avatar">
-        <div class="text">AB</div>
+        <div class="text">${initials}</div>
       </div>
   `
 
     this.shadow.appendChild(template.content.cloneNode(true))
+    this.setAttributes()
+  }
+
+  get initials() {
+    return this.getAttribute('initials') || this.defaultAttributes.initials
   }
 }
 
