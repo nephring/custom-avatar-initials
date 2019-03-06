@@ -5,15 +5,16 @@
   string,
   size,
   rounded,
-  cornerRadius,
+  corner-radius,
   uppercase,
-  textWeight,
-  textScale,
-  textColor,
-  textLength,
-  autoColor,
-  backgroundColor,
-  borderColor: { color, thickness }
+  text-weight,
+  text-size,
+  text-color,
+  text-length,
+  auto-color,
+  background-color,
+  border-color,
+  border-thickness
 
 */
 
@@ -29,42 +30,31 @@ function getInitialsFromString(string) {
 }
 
 class AvatarInitials extends HTMLElement {
+  static get observedAttributes() {
+    return ['initials', 'string', 'size']
+  }
+
   constructor() {
     super()
-
     this.shadow = this.attachShadow({ mode: 'open' })
-
-    this.defaultAttributes = {
-      initials: 'ABC',
-      string: 'John Smith Adam'
-    }
   }
 
-  static get observedAttributes() {
-    return ['initials', 'string']
-  }
-
-  hasInitials() {
+  _hasInitials() {
     return this.hasAttribute('initials')
   }
 
-  hasString() {
+  _hasString() {
     return this.hasAttribute('string')
   }
 
-  connectedCallback() {
-    console.log(this)
-    this.render()
-  }
-
-  getText() {
-    if (!this.hasInitials() && this.hasString()) {
+  _getText() {
+    if (!this._hasInitials() && this._hasString()) {
       return shortenInitials(getInitialsFromString(this.string))
     }
     return shortenInitials(this.initials)
   }
 
-  render() {
+  _render() {
     this.shadowContainerElement = document.createElement('div')
     this.shadowTextElement = document.createElement('div')
 
@@ -74,26 +64,58 @@ class AvatarInitials extends HTMLElement {
     this.shadowContainerElement.style.boxSizing = 'border-box'
     this.shadowContainerElement.style.border = `1px solid black`
     this.shadowContainerElement.style.backgroundColor = `#eee`
-    this.shadowContainerElement.style.width = `70px`
-    this.shadowContainerElement.style.height = `70px`
+    this.shadowContainerElement.style.width = `100px`
+    this.shadowContainerElement.style.height = `100px`
 
     this.shadowTextElement.style.fontSize = '1.7em'
     this.shadowTextElement.style.color = '#1a1a1a'
     this.shadowTextElement.style.fontFamily = 'sans-serif'
     this.shadowTextElement.style.fontWeight = 'bold'
 
-    this.shadowTextElement.innerText = this.getText()
+    this.shadowTextElement.innerText = this._getText()
 
     this.shadowContainerElement.appendChild(this.shadowTextElement)
     this.shadow.appendChild(this.shadowContainerElement)
   }
 
+  connectedCallback() {
+    console.log(this)
+
+    this.defaultAttributes = {
+      initials: 'AB',
+      string: 'John Smith',
+      size: 100
+    }
+    this._render()
+  }
+
+  disconnectedCallback() {
+    this.shadow.removeChild(this.shadowContainerElement)
+  }
+
+  attributeChangedCallback(attribute, oldValue, newValue) {
+    switch (attribute) {
+      case 'initials':
+        return (this._initials = newValue)
+      case 'string':
+        return (this._string = newValue)
+    }
+  }
+
   get initials() {
-    return this.getAttribute('initials') || this.defaultAttributes.initials
+    return this._initials || this.defaultAttributes.initials
   }
 
   get string() {
-    return this.getAttribute('string') || this.defaultAttributes.string
+    return this._string || this.defaultAttributes.string
+  }
+
+  set initials(value) {
+    this.setAttribute('initials', value)
+  }
+
+  set string(value) {
+    this.setAttribute('string', value)
   }
 }
 
