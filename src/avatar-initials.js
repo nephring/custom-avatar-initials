@@ -48,13 +48,26 @@ class AvatarInitials extends HTMLElement {
   }
 
   _getText() {
+    // initials has priority
     if (!this._hasInitials() && this._hasString()) {
       return shortenInitials(getInitialsFromString(this.string))
     }
     return shortenInitials(this.initials)
   }
 
+  _getBorderRadius() {
+    // rounded has priority
+    if (!this.rounded && this.cornerRadius) {
+      return `${this.cornerRadius}px`
+    }
+    return '50%'
+  }
+
   _render() {
+    console.log(this)
+    const borderRadius = this._getBorderRadius()
+    const text = this._getText()
+
     this.shadowContainerElement = document.createElement('div')
     this.shadowTextElement = document.createElement('div')
 
@@ -66,15 +79,14 @@ class AvatarInitials extends HTMLElement {
     this.shadowContainerElement.style.backgroundColor = `#eee`
     this.shadowContainerElement.style.width = `100px`
     this.shadowContainerElement.style.height = `100px`
-    this.shadowContainerElement.style.borderRadius = `${this.cornerRadius}px`
-    if (this.rounded) this.shadowContainerElement.style.borderRadius = '50%' // rounded attribute has priority
+    this.shadowContainerElement.style.borderRadius = `${borderRadius}`
 
     this.shadowTextElement.style.fontSize = '1.7em'
     this.shadowTextElement.style.color = '#1a1a1a'
     this.shadowTextElement.style.fontFamily = 'sans-serif'
     this.shadowTextElement.style.fontWeight = 'bold'
 
-    this.shadowTextElement.innerText = this._getText()
+    this.shadowTextElement.innerText = text
 
     this.shadowContainerElement.appendChild(this.shadowTextElement)
     this.shadow.appendChild(this.shadowContainerElement)
