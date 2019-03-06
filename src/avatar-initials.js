@@ -84,7 +84,7 @@ class AvatarInitials extends HTMLElement {
   }
 
   _getBorderRadius() {
-    if (this.rounded) {
+    if (this.rounded === 'true' || this.rounded === true) {
       return '50%'
     }
     return `${this.cornerRadius}px`
@@ -154,7 +154,7 @@ class AvatarInitials extends HTMLElement {
       case 'size':
         return (this._size = newValue)
       case 'rounded':
-        return (this._rounded = true)
+        return (this._rounded = newValue || true)
       case 'corner-radius':
         return (this._cornerRadius = newValue)
       case 'uppercase':
