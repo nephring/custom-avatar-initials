@@ -71,7 +71,6 @@ class AvatarInitials extends HTMLElement {
   }
 
   _render() {
-    console.log(this)
     const borderRadius = this._getBorderRadius()
     const text = this._getText()
 
@@ -87,6 +86,8 @@ class AvatarInitials extends HTMLElement {
     this.shadowContainerElement.style.width = `100px`
     this.shadowContainerElement.style.height = `100px`
     this.shadowContainerElement.style.borderRadius = `${borderRadius}`
+    if (this.uppercase)
+      this.shadowContainerElement.style.textTransform = 'uppercase'
 
     this.shadowTextElement.style.fontSize = '1.7em'
     this.shadowTextElement.style.color = '#1a1a1a'
@@ -101,8 +102,8 @@ class AvatarInitials extends HTMLElement {
 
   connectedCallback() {
     this.defaultAttributes = {
-      initials: 'AB',
-      string: 'John Smith',
+      initials: 'ab',
+      string: 'john smith',
       size: 100,
       rounded: false,
       cornerRadius: 0,
@@ -127,6 +128,8 @@ class AvatarInitials extends HTMLElement {
         return (this._rounded = true)
       case 'corner-radius':
         return (this._cornerRadius = newValue)
+      case 'uppercase':
+        return (this._uppercase = true)
     }
   }
 
@@ -146,6 +149,10 @@ class AvatarInitials extends HTMLElement {
     return this._cornerRadius || this.defaultAttributes.cornerRadius
   }
 
+  get uppercase() {
+    return this._uppercase || this.defaultAttributes.uppercase
+  }
+
   set initials(value) {
     this.setAttribute('initials', value)
   }
@@ -160,6 +167,10 @@ class AvatarInitials extends HTMLElement {
 
   set cornerRadius(value) {
     this.setAttribute('corner-radius', value)
+  }
+
+  set uppercase(value) {
+    this.setAttribute('uppercase', value)
   }
 }
 
