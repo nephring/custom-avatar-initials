@@ -90,6 +90,10 @@ class AvatarInitials extends HTMLElement {
     return `${this.cornerRadius}px`
   }
 
+  _isUppercase() {
+    return this.uppercase === 'true' || this.uppercase === true
+  }
+
   _render() {
     this.shadowContainerElement = document.createElement('div')
     this.shadowTextElement = document.createElement('div')
@@ -113,7 +117,8 @@ class AvatarInitials extends HTMLElement {
     this.shadowTextElement.style.fontWeight = this.textWeight
     this.shadowTextElement.style.transform = `scale(${this.textScale})`
     this.shadowTextElement.style.color = this.textColor
-    if (this.uppercase) this.shadowTextElement.style.textTransform = 'uppercase'
+    if (this._isUppercase())
+      this.shadowTextElement.style.textTransform = 'uppercase'
 
     this.shadowTextElement.innerText = this._getAvatarText()
 
@@ -158,7 +163,7 @@ class AvatarInitials extends HTMLElement {
       case 'corner-radius':
         return (this._cornerRadius = newValue)
       case 'uppercase':
-        return (this._uppercase = true)
+        return (this._uppercase = newValue || true)
       case 'text-weight':
         return (this._textWeight = newValue)
       case 'text-scale':
