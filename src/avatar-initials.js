@@ -11,7 +11,7 @@
   --text-scale
   --text-color,
   --text-length,
-  auto-color,
+  --auto-color,
   --background-color,
   --border,
   --border-color,
@@ -40,7 +40,8 @@ class AvatarInitials extends HTMLElement {
       'text-length',
       'background-color',
       'border',
-      'border-color'
+      'border-color',
+      'auto-color'
     ]
   }
 
@@ -62,7 +63,6 @@ class AvatarInitials extends HTMLElement {
   }
 
   _getAvatarText() {
-    // initials has priority
     const getText = () => {
       if (!this._hasInitials() && this._hasString()) {
         return getInitialsFromString(this.string)
@@ -73,8 +73,17 @@ class AvatarInitials extends HTMLElement {
     return this._hasTextLength() ? text.substring(0, this.textLength) : text
   }
 
+  _getRandomHexColor() {
+    const letters = '0123456789ABCDEF'
+    let color = '#'
+
+    Array(6)
+      .fill()
+      .map(() => (color += letters[Math.floor(Math.random() * letters.length)]))
+    return color
+  }
+
   _getBorderRadius() {
-    // rounded has priority
     if (this.rounded) {
       return '50%'
     }
@@ -93,14 +102,15 @@ class AvatarInitials extends HTMLElement {
       this.shadowContainerElement.style.border = `${this.border}px solid ${
         this.borderColor
       }`
-    this.shadowContainerElement.style.backgroundColor = this.backgroundColor
+    this.shadowContainerElement.style.backgroundColor = this.autoColor
+      ? this._getRandomHexColor()
+      : this.backgroundColor
     this.shadowContainerElement.style.width = `100px`
     this.shadowContainerElement.style.height = `100px`
     this.shadowContainerElement.style.borderRadius = `${this._getBorderRadius()}`
     if (this.uppercase)
       this.shadowContainerElement.style.textTransform = 'uppercase'
 
-    this.shadowTextElement.style.color = '#1a1a1a'
     this.shadowTextElement.style.fontFamily = 'sans-serif'
     this.shadowTextElement.style.fontWeight = this.textWeight
     this.shadowTextElement.style.transform = `scale(${this.textScale})`
@@ -126,7 +136,8 @@ class AvatarInitials extends HTMLElement {
       textLength: null,
       backgroundColor: '#959595',
       border: 0,
-      borderColor: '#555555'
+      borderColor: '#555555',
+      autoColor: false
     }
     this._render()
   }
@@ -163,6 +174,8 @@ class AvatarInitials extends HTMLElement {
         return (this._border = newValue)
       case 'border-color':
         return (this._borderColor = newValue)
+      case 'auto-color':
+        return (this._autoColor = true)
     }
   }
 
@@ -214,6 +227,10 @@ class AvatarInitials extends HTMLElement {
     return this._borderColor || this.defaultAttributes.borderColor
   }
 
+  get autoColor() {
+    return this._autoColor || this.defaultAttributes.autoColor
+  }
+
   set initials(value) {
     this.setAttribute('initials', value)
   }
@@ -260,6 +277,10 @@ class AvatarInitials extends HTMLElement {
 
   set borderColor(value) {
     this.setAttribute('border-color', value)
+  }
+
+  set autoColor(value) {
+    this.setAttribute('auto-color', value)
   }
 }
 
