@@ -37,7 +37,8 @@ class AvatarInitials extends HTMLElement {
       'size',
       'rounded',
       'corner-radius',
-      'uppercase'
+      'uppercase',
+      'text-weight'
     ]
   }
 
@@ -73,6 +74,7 @@ class AvatarInitials extends HTMLElement {
   _render() {
     const borderRadius = this._getBorderRadius()
     const text = this._getText()
+    const textWeight = this.textWeight
 
     this.shadowContainerElement = document.createElement('div')
     this.shadowTextElement = document.createElement('div')
@@ -92,7 +94,7 @@ class AvatarInitials extends HTMLElement {
     this.shadowTextElement.style.fontSize = '1.7em'
     this.shadowTextElement.style.color = '#1a1a1a'
     this.shadowTextElement.style.fontFamily = 'sans-serif'
-    this.shadowTextElement.style.fontWeight = 'bold'
+    this.shadowTextElement.style.fontWeight = textWeight
 
     this.shadowTextElement.innerText = text
 
@@ -107,7 +109,8 @@ class AvatarInitials extends HTMLElement {
       size: 100,
       rounded: false,
       cornerRadius: 0,
-      uppercase: false
+      uppercase: false,
+      textWeight: '700'
     }
     this._render()
   }
@@ -130,6 +133,8 @@ class AvatarInitials extends HTMLElement {
         return (this._cornerRadius = newValue)
       case 'uppercase':
         return (this._uppercase = true)
+      case 'text-weight':
+        return (this._textWeight = newValue)
     }
   }
 
@@ -153,6 +158,10 @@ class AvatarInitials extends HTMLElement {
     return this._uppercase || this.defaultAttributes.uppercase
   }
 
+  get textWeight() {
+    return this._textWeight || this.defaultAttributes.textWeight
+  }
+
   set initials(value) {
     this.setAttribute('initials', value)
   }
@@ -171,6 +180,10 @@ class AvatarInitials extends HTMLElement {
 
   set uppercase(value) {
     this.setAttribute('uppercase', value)
+  }
+
+  set textWeight(value) {
+    this.setAttribute('text-weight', value)
   }
 }
 
