@@ -9,7 +9,7 @@
   --uppercase,
   --text-weight,
   --text-scale
-  text-color,
+  --text-color,
   text-length,
   auto-color,
   background-color,
@@ -17,10 +17,6 @@
   border-thickness
 
 */
-
-function shortenInitials(initials) {
-  return initials.substring(0, 3)
-}
 
 function getInitialsFromString(string) {
   return string
@@ -40,7 +36,8 @@ class AvatarInitials extends HTMLElement {
       'uppercase',
       'text-weight',
       'text-scale',
-      'text-color'
+      'text-color',
+      'text-length'
     ]
   }
 
@@ -57,12 +54,20 @@ class AvatarInitials extends HTMLElement {
     return this.hasAttribute('string')
   }
 
-  _getText() {
+  _hasTextLength() {
+    return this.hasAttribute('text-length') && this.textLength
+  }
+
+  _getAvatarText() {
     // initials has priority
-    if (!this._hasInitials() && this._hasString()) {
-      return shortenInitials(getInitialsFromString(this.string))
+    const getText = () => {
+      if (!this._hasInitials() && this._hasString()) {
+        return getInitialsFromString(this.string)
+      }
+      return this.initials
     }
-    return shortenInitials(this.initials)
+    const text = getText()
+    return this._hasTextLength() ? text.substring(0, this.textLength) : text
   }
 
   _getBorderRadius() {
@@ -75,7 +80,7 @@ class AvatarInitials extends HTMLElement {
 
   _render() {
     const borderRadius = this._getBorderRadius()
-    const text = this._getText()
+    const text = this._getAvatarText()
     const textWeight = this.textWeight
     const textScale = this.textScale
     const textColor = this.textColor
@@ -117,7 +122,8 @@ class AvatarInitials extends HTMLElement {
       uppercase: false,
       textWeight: '700',
       textScale: '2',
-      textColor: '#000'
+      textColor: '#000',
+      textLength: null
     }
     this._render()
   }
@@ -146,6 +152,8 @@ class AvatarInitials extends HTMLElement {
         return (this._textScale = newValue)
       case 'text-color':
         return (this._textColor = newValue)
+      case 'text-length':
+        return (this._textLength = newValue)
     }
   }
 
@@ -181,6 +189,10 @@ class AvatarInitials extends HTMLElement {
     return this._textColor || this.defaultAttributes.textColor
   }
 
+  get textLength() {
+    return this._textLength || this.defaultAttributes.textLength
+  }
+
   set initials(value) {
     this.setAttribute('initials', value)
   }
@@ -211,6 +223,10 @@ class AvatarInitials extends HTMLElement {
 
   set textColor(value) {
     this.setAttribute('text-color', value)
+  }
+
+  set textLength(value) {
+    this.setAttribute('text-length', value)
   }
 }
 
