@@ -33,10 +33,10 @@ class AvatarInitials extends HTMLElement {
     super()
 
     this.shadow = this.attachShadow({ mode: 'open' })
+
     this.defaultAttributes = {
       initials: 'ABC',
-      string: 'John Smith Adam',
-      rounded: false
+      string: 'John Smith Adam'
     }
   }
 
@@ -65,38 +65,27 @@ class AvatarInitials extends HTMLElement {
   }
 
   render() {
-    const template = document.createElement('template')
+    this.shadowContainerElement = document.createElement('div')
+    this.shadowTextElement = document.createElement('div')
 
-    const text = this.getText()
+    this.shadowContainerElement.style.display = 'flex'
+    this.shadowContainerElement.style.justifyContent = 'center'
+    this.shadowContainerElement.style.alignItems = 'center'
+    this.shadowContainerElement.style.boxSizing = 'border-box'
+    this.shadowContainerElement.style.border = `1px solid black`
+    this.shadowContainerElement.style.backgroundColor = `#eee`
+    this.shadowContainerElement.style.width = `70px`
+    this.shadowContainerElement.style.height = `70px`
 
-    template.innerHTML = `
-      <style>
-        .avatar {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          box-sizing: border-box;
-          width: 60px;
-          height: 60px;
-          border: 1px solid white;
-          border-radius: 50%;
-          background-color: #eee;
-        }
+    this.shadowTextElement.style.fontSize = '1.7em'
+    this.shadowTextElement.style.color = '#1a1a1a'
+    this.shadowTextElement.style.fontFamily = 'sans-serif'
+    this.shadowTextElement.style.fontWeight = 'bold'
 
-        .text {
-          font-size: 1.7em;
-          color: #1a1a1a;
-          font-family: sans-serif;
-          font-weight: bold;
-          padding: 2px;
-        }
-      </style>
-      <div class="avatar">
-        <div class="text">${text}</div>
-      </div>
-  `
+    this.shadowTextElement.innerText = this.getText()
 
-    this.shadow.appendChild(template.content.cloneNode(true))
+    this.shadowContainerElement.appendChild(this.shadowTextElement)
+    this.shadow.appendChild(this.shadowContainerElement)
   }
 
   get initials() {
