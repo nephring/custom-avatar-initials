@@ -108,13 +108,12 @@ class AvatarInitials extends HTMLElement {
     this.shadowContainerElement.style.width = `${this.size}px`
     this.shadowContainerElement.style.height = `${this.size}px`
     this.shadowContainerElement.style.borderRadius = `${this._getBorderRadius()}`
-    if (this.uppercase)
-      this.shadowContainerElement.style.textTransform = 'uppercase'
 
     this.shadowTextElement.style.fontFamily = 'sans-serif'
     this.shadowTextElement.style.fontWeight = this.textWeight
     this.shadowTextElement.style.transform = `scale(${this.textScale})`
     this.shadowTextElement.style.color = this.textColor
+    if (this.uppercase) this.shadowTextElement.style.textTransform = 'uppercase'
 
     this.shadowTextElement.innerText = this._getAvatarText()
 
@@ -132,11 +131,11 @@ class AvatarInitials extends HTMLElement {
       uppercase: false,
       textWeight: '700',
       textScale: '2',
-      textColor: '#FFF',
+      textColor: '#494949',
       textLength: null,
-      backgroundColor: '#959595',
+      backgroundColor: '#e2e2e2',
       border: 0,
-      borderColor: '#555555',
+      borderColor: '#494949',
       autoColor: false
     }
     this._render()
