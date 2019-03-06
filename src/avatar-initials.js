@@ -105,8 +105,8 @@ class AvatarInitials extends HTMLElement {
     this.shadowContainerElement.style.backgroundColor = this.autoColor
       ? this._getRandomHexColor()
       : this.backgroundColor
-    this.shadowContainerElement.style.width = `100px`
-    this.shadowContainerElement.style.height = `100px`
+    this.shadowContainerElement.style.width = `${this.size}px`
+    this.shadowContainerElement.style.height = `${this.size}px`
     this.shadowContainerElement.style.borderRadius = `${this._getBorderRadius()}`
     if (this.uppercase)
       this.shadowContainerElement.style.textTransform = 'uppercase'
@@ -126,7 +126,7 @@ class AvatarInitials extends HTMLElement {
     this.defaultAttributes = {
       initials: 'ab',
       string: 'john smith',
-      size: 100,
+      size: 70,
       rounded: false,
       cornerRadius: 0,
       uppercase: false,
@@ -183,6 +183,10 @@ class AvatarInitials extends HTMLElement {
     return this._initials || this.defaultAttributes.initials
   }
 
+  get size() {
+    return this._size || this.defaultAttributes.size
+  }
+
   get string() {
     return this._string || this.defaultAttributes.string
   }
@@ -233,6 +237,10 @@ class AvatarInitials extends HTMLElement {
 
   set initials(value) {
     this.setAttribute('initials', value)
+  }
+
+  set size(value) {
+    this.setAttribute('size', value)
   }
 
   set string(value) {
