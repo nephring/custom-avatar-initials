@@ -13,8 +13,8 @@
   --text-length,
   auto-color,
   --background-color,
+  --border,
   --border-color,
-  border-thickness
 
 */
 
@@ -39,6 +39,7 @@ class AvatarInitials extends HTMLElement {
       'text-color',
       'text-length',
       'background-color',
+      'border',
       'border-color'
     ]
   }
@@ -88,7 +89,10 @@ class AvatarInitials extends HTMLElement {
     this.shadowContainerElement.style.justifyContent = 'center'
     this.shadowContainerElement.style.alignItems = 'center'
     this.shadowContainerElement.style.boxSizing = 'border-box'
-    this.shadowContainerElement.style.border = `1px solid ${this.borderColor}`
+    if (this.border)
+      this.shadowContainerElement.style.border = `${this.border}px solid ${
+        this.borderColor
+      }`
     this.shadowContainerElement.style.backgroundColor = this.backgroundColor
     this.shadowContainerElement.style.width = `100px`
     this.shadowContainerElement.style.height = `100px`
@@ -121,6 +125,7 @@ class AvatarInitials extends HTMLElement {
       textColor: '#FFF',
       textLength: null,
       backgroundColor: '#959595',
+      border: 0,
       borderColor: '#555555'
     }
     this._render()
@@ -154,6 +159,8 @@ class AvatarInitials extends HTMLElement {
         return (this._textLength = newValue)
       case 'background-color':
         return (this._backgroundColor = newValue)
+      case 'border':
+        return (this._border = newValue)
       case 'border-color':
         return (this._borderColor = newValue)
     }
@@ -199,6 +206,10 @@ class AvatarInitials extends HTMLElement {
     return this._backgroundColor || this.defaultAttributes.backgroundColor
   }
 
+  get border() {
+    return this._border || this.defaultAttributes.border
+  }
+
   get borderColor() {
     return this._borderColor || this.defaultAttributes.borderColor
   }
@@ -241,6 +252,10 @@ class AvatarInitials extends HTMLElement {
 
   set backgroundColor(value) {
     this.setAttribute('background-color', value)
+  }
+
+  set border(value) {
+    this.setAttribute('border', value)
   }
 
   set borderColor(value) {
