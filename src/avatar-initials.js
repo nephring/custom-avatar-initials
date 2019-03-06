@@ -8,7 +8,7 @@
   corner-radius,
   uppercase,
   text-weight,
-  text-size,
+  text-scale
   text-color,
   text-length,
   auto-color,
@@ -38,7 +38,8 @@ class AvatarInitials extends HTMLElement {
       'rounded',
       'corner-radius',
       'uppercase',
-      'text-weight'
+      'text-weight',
+      'text-scale'
     ]
   }
 
@@ -75,6 +76,7 @@ class AvatarInitials extends HTMLElement {
     const borderRadius = this._getBorderRadius()
     const text = this._getText()
     const textWeight = this.textWeight
+    const textScale = this.textScale
 
     this.shadowContainerElement = document.createElement('div')
     this.shadowTextElement = document.createElement('div')
@@ -91,10 +93,10 @@ class AvatarInitials extends HTMLElement {
     if (this.uppercase)
       this.shadowContainerElement.style.textTransform = 'uppercase'
 
-    this.shadowTextElement.style.fontSize = '1.7em'
     this.shadowTextElement.style.color = '#1a1a1a'
     this.shadowTextElement.style.fontFamily = 'sans-serif'
     this.shadowTextElement.style.fontWeight = textWeight
+    this.shadowTextElement.style.transform = `scale(${textScale})`
 
     this.shadowTextElement.innerText = text
 
@@ -110,7 +112,8 @@ class AvatarInitials extends HTMLElement {
       rounded: false,
       cornerRadius: 0,
       uppercase: false,
-      textWeight: '700'
+      textWeight: '700',
+      textScale: '2'
     }
     this._render()
   }
@@ -135,6 +138,8 @@ class AvatarInitials extends HTMLElement {
         return (this._uppercase = true)
       case 'text-weight':
         return (this._textWeight = newValue)
+      case 'text-scale':
+        return (this._textScale = newValue)
     }
   }
 
@@ -162,6 +167,10 @@ class AvatarInitials extends HTMLElement {
     return this._textWeight || this.defaultAttributes.textWeight
   }
 
+  get textScale() {
+    return this._textScale || this.defaultAttributes.textScale
+  }
+
   set initials(value) {
     this.setAttribute('initials', value)
   }
@@ -184,6 +193,10 @@ class AvatarInitials extends HTMLElement {
 
   set textWeight(value) {
     this.setAttribute('text-weight', value)
+  }
+
+  set textScale(value) {
+    this.setAttribute('text-scale', value)
   }
 }
 
