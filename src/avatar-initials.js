@@ -31,7 +31,7 @@ function getInitialsFromString(string) {
 
 class AvatarInitials extends HTMLElement {
   static get observedAttributes() {
-    return ['initials', 'string', 'size']
+    return ['initials', 'string', 'size', 'rounded']
   }
 
   constructor() {
@@ -66,6 +66,7 @@ class AvatarInitials extends HTMLElement {
     this.shadowContainerElement.style.backgroundColor = `#eee`
     this.shadowContainerElement.style.width = `100px`
     this.shadowContainerElement.style.height = `100px`
+    if (this.rounded) this.shadowContainerElement.style.borderRadius = '50%'
 
     this.shadowTextElement.style.fontSize = '1.7em'
     this.shadowTextElement.style.color = '#1a1a1a'
@@ -79,12 +80,11 @@ class AvatarInitials extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log(this)
-
     this.defaultAttributes = {
       initials: 'AB',
       string: 'John Smith',
-      size: 100
+      size: 100,
+      rounded: false
     }
     this._render()
   }
@@ -110,12 +110,20 @@ class AvatarInitials extends HTMLElement {
     return this._string || this.defaultAttributes.string
   }
 
+  get rounded() {
+    return this.hasAttribute('rounded') || this.defaultAttributes.rounded
+  }
+
   set initials(value) {
     this.setAttribute('initials', value)
   }
 
   set string(value) {
     this.setAttribute('string', value)
+  }
+
+  set rounded(value) {
+    this.setAttribute('rounded', value)
   }
 }
 
