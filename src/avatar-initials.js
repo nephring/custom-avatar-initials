@@ -31,7 +31,7 @@ function getInitialsFromString(string) {
 
 class AvatarInitials extends HTMLElement {
   static get observedAttributes() {
-    return ['initials', 'string', 'size', 'rounded']
+    return ['initials', 'string', 'size', 'rounded', 'corner-radius']
   }
 
   constructor() {
@@ -66,7 +66,8 @@ class AvatarInitials extends HTMLElement {
     this.shadowContainerElement.style.backgroundColor = `#eee`
     this.shadowContainerElement.style.width = `100px`
     this.shadowContainerElement.style.height = `100px`
-    if (this.rounded) this.shadowContainerElement.style.borderRadius = '50%'
+    this.shadowContainerElement.style.borderRadius = `${this.cornerRadius}px`
+    if (this.rounded) this.shadowContainerElement.style.borderRadius = '50%' // rounded attribute has priority
 
     this.shadowTextElement.style.fontSize = '1.7em'
     this.shadowTextElement.style.color = '#1a1a1a'
@@ -84,7 +85,8 @@ class AvatarInitials extends HTMLElement {
       initials: 'AB',
       string: 'John Smith',
       size: 100,
-      rounded: false
+      rounded: false,
+      cornerRadius: 0
     }
     this._render()
   }
@@ -114,6 +116,12 @@ class AvatarInitials extends HTMLElement {
     return this.hasAttribute('rounded') || this.defaultAttributes.rounded
   }
 
+  get cornerRadius() {
+    return (
+      this.getAttribute('corner-radius') || this.defaultAttributes.cornerRadius
+    )
+  }
+
   set initials(value) {
     this.setAttribute('initials', value)
   }
@@ -124,6 +132,10 @@ class AvatarInitials extends HTMLElement {
 
   set rounded(value) {
     this.setAttribute('rounded', value)
+  }
+
+  set cornerRadius(value) {
+    this.setAttribute('corner-radius', value)
   }
 }
 
