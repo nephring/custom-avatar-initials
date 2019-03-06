@@ -31,7 +31,14 @@ function getInitialsFromString(string) {
 
 class AvatarInitials extends HTMLElement {
   static get observedAttributes() {
-    return ['initials', 'string', 'size', 'rounded', 'corner-radius']
+    return [
+      'initials',
+      'string',
+      'size',
+      'rounded',
+      'corner-radius',
+      'uppercase'
+    ]
   }
 
   constructor() {
@@ -57,10 +64,10 @@ class AvatarInitials extends HTMLElement {
 
   _getBorderRadius() {
     // rounded has priority
-    if (!this.rounded && this.cornerRadius) {
-      return `${this.cornerRadius}px`
+    if (this.rounded) {
+      return '50%'
     }
-    return '50%'
+    return `${this.cornerRadius}px`
   }
 
   _render() {
@@ -98,7 +105,8 @@ class AvatarInitials extends HTMLElement {
       string: 'John Smith',
       size: 100,
       rounded: false,
-      cornerRadius: 0
+      cornerRadius: 0,
+      uppercase: false
     }
     this._render()
   }
@@ -113,6 +121,12 @@ class AvatarInitials extends HTMLElement {
         return (this._initials = newValue)
       case 'string':
         return (this._string = newValue)
+      case 'size':
+        return (this._size = newValue)
+      case 'rounded':
+        return (this._rounded = true)
+      case 'corner-radius':
+        return (this._cornerRadius = newValue)
     }
   }
 
@@ -125,13 +139,11 @@ class AvatarInitials extends HTMLElement {
   }
 
   get rounded() {
-    return this.hasAttribute('rounded') || this.defaultAttributes.rounded
+    return this._rounded || this.defaultAttributes.rounded
   }
 
   get cornerRadius() {
-    return (
-      this.getAttribute('corner-radius') || this.defaultAttributes.cornerRadius
-    )
+    return this._cornerRadius || this.defaultAttributes.cornerRadius
   }
 
   set initials(value) {
