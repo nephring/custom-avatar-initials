@@ -18,13 +18,6 @@
 
 */
 
-function getInitialsFromString(string) {
-  return string
-    .split(/ |-/)
-    .map(value => value.charAt(0))
-    .join('')
-}
-
 class AvatarInitials extends HTMLElement {
   static get observedAttributes() {
     return [
@@ -62,10 +55,17 @@ class AvatarInitials extends HTMLElement {
     return this.hasAttribute('text-length') && this.textLength
   }
 
+  _getInitialsFromString = string => {
+    return string
+      .split(/ |-/)
+      .map(value => value.charAt(0))
+      .join('')
+  }
+
   _getAvatarText() {
     const getText = () => {
       if (!this._hasInitials() && this._hasString()) {
-        return getInitialsFromString(this.string)
+        return this._getInitialsFromString(this.string)
       }
       return this.initials
     }
