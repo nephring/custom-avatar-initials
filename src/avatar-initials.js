@@ -1,14 +1,14 @@
 /*
   @properties
 
-  initials,
-  string,
-  size,
-  rounded,
-  corner-radius,
-  uppercase,
-  text-weight,
-  text-scale
+  --initials,
+  --string,
+  --size,
+  --rounded,
+  --corner-radius,
+  --uppercase,
+  --text-weight,
+  --text-scale
   text-color,
   text-length,
   auto-color,
@@ -39,7 +39,8 @@ class AvatarInitials extends HTMLElement {
       'corner-radius',
       'uppercase',
       'text-weight',
-      'text-scale'
+      'text-scale',
+      'text-color'
     ]
   }
 
@@ -77,6 +78,7 @@ class AvatarInitials extends HTMLElement {
     const text = this._getText()
     const textWeight = this.textWeight
     const textScale = this.textScale
+    const textColor = this.textColor
 
     this.shadowContainerElement = document.createElement('div')
     this.shadowTextElement = document.createElement('div')
@@ -97,6 +99,7 @@ class AvatarInitials extends HTMLElement {
     this.shadowTextElement.style.fontFamily = 'sans-serif'
     this.shadowTextElement.style.fontWeight = textWeight
     this.shadowTextElement.style.transform = `scale(${textScale})`
+    this.shadowTextElement.style.color = textColor
 
     this.shadowTextElement.innerText = text
 
@@ -113,7 +116,8 @@ class AvatarInitials extends HTMLElement {
       cornerRadius: 0,
       uppercase: false,
       textWeight: '700',
-      textScale: '2'
+      textScale: '2',
+      textColor: '#000'
     }
     this._render()
   }
@@ -140,6 +144,8 @@ class AvatarInitials extends HTMLElement {
         return (this._textWeight = newValue)
       case 'text-scale':
         return (this._textScale = newValue)
+      case 'text-color':
+        return (this._textColor = newValue)
     }
   }
 
@@ -171,6 +177,10 @@ class AvatarInitials extends HTMLElement {
     return this._textScale || this.defaultAttributes.textScale
   }
 
+  get textColor() {
+    return this._textColor || this.defaultAttributes.textColor
+  }
+
   set initials(value) {
     this.setAttribute('initials', value)
   }
@@ -197,6 +207,10 @@ class AvatarInitials extends HTMLElement {
 
   set textScale(value) {
     this.setAttribute('text-scale', value)
+  }
+
+  set textColor(value) {
+    this.setAttribute('text-color', value)
   }
 }
 
