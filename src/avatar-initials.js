@@ -10,7 +10,7 @@
   --text-weight,
   --text-scale
   --text-color,
-  text-length,
+  --text-length,
   auto-color,
   background-color,
   border-color,
@@ -37,7 +37,8 @@ class AvatarInitials extends HTMLElement {
       'text-weight',
       'text-scale',
       'text-color',
-      'text-length'
+      'text-length',
+      'background-color'
     ]
   }
 
@@ -84,6 +85,7 @@ class AvatarInitials extends HTMLElement {
     const textWeight = this.textWeight
     const textScale = this.textScale
     const textColor = this.textColor
+    const backgroundColor = this.backgroundColor
 
     this.shadowContainerElement = document.createElement('div')
     this.shadowTextElement = document.createElement('div')
@@ -93,7 +95,7 @@ class AvatarInitials extends HTMLElement {
     this.shadowContainerElement.style.alignItems = 'center'
     this.shadowContainerElement.style.boxSizing = 'border-box'
     this.shadowContainerElement.style.border = `1px solid black`
-    this.shadowContainerElement.style.backgroundColor = `#eee`
+    this.shadowContainerElement.style.backgroundColor = backgroundColor
     this.shadowContainerElement.style.width = `100px`
     this.shadowContainerElement.style.height = `100px`
     this.shadowContainerElement.style.borderRadius = `${borderRadius}`
@@ -122,8 +124,9 @@ class AvatarInitials extends HTMLElement {
       uppercase: false,
       textWeight: '700',
       textScale: '2',
-      textColor: '#000',
-      textLength: null
+      textColor: '#FFF',
+      textLength: null,
+      backgroundColor: '#000'
     }
     this._render()
   }
@@ -154,6 +157,8 @@ class AvatarInitials extends HTMLElement {
         return (this._textColor = newValue)
       case 'text-length':
         return (this._textLength = newValue)
+      case 'background-color':
+        return (this._backgroundColor = newValue)
     }
   }
 
@@ -193,6 +198,10 @@ class AvatarInitials extends HTMLElement {
     return this._textLength || this.defaultAttributes.textLength
   }
 
+  get backgroundColor() {
+    return this._backgroundColor || this.defaultAttributes.backgroundColor
+  }
+
   set initials(value) {
     this.setAttribute('initials', value)
   }
@@ -227,6 +236,10 @@ class AvatarInitials extends HTMLElement {
 
   set textLength(value) {
     this.setAttribute('text-length', value)
+  }
+
+  set backgroundColor(value) {
+    this.setAttribute('background-color', value)
   }
 }
 
