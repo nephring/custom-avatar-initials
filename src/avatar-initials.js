@@ -94,6 +94,10 @@ class AvatarInitials extends HTMLElement {
     return this.uppercase === 'true' || this.uppercase === true
   }
 
+  _isAutoColor() {
+    return this.autoColor === 'true' || this.autoColor === true
+  }
+
   _render() {
     this.shadowContainerElement = document.createElement('div')
     this.shadowTextElement = document.createElement('div')
@@ -106,7 +110,7 @@ class AvatarInitials extends HTMLElement {
       this.shadowContainerElement.style.border = `${this.border}px solid ${
         this.borderColor
       }`
-    this.shadowContainerElement.style.backgroundColor = this.autoColor
+    this.shadowContainerElement.style.backgroundColor = this._isAutoColor()
       ? this._getRandomHexColor()
       : this.backgroundColor
     this.shadowContainerElement.style.width = `${this.size}px`
@@ -135,7 +139,7 @@ class AvatarInitials extends HTMLElement {
       cornerRadius: 0,
       uppercase: false,
       textWeight: '700',
-      textScale: '2',
+      textScale: '1',
       textColor: '#494949',
       textLength: null,
       backgroundColor: '#e2e2e2',
@@ -179,7 +183,7 @@ class AvatarInitials extends HTMLElement {
       case 'border-color':
         return (this._borderColor = newValue)
       case 'auto-color':
-        return (this._autoColor = true)
+        return (this._autoColor = newValue || true)
     }
   }
 
