@@ -12,8 +12,8 @@
   --text-color,
   --text-length,
   auto-color,
-  background-color,
-  border-color,
+  --background-color,
+  --border-color,
   border-thickness
 
 */
@@ -38,7 +38,8 @@ class AvatarInitials extends HTMLElement {
       'text-scale',
       'text-color',
       'text-length',
-      'background-color'
+      'background-color',
+      'border-color'
     ]
   }
 
@@ -80,13 +81,6 @@ class AvatarInitials extends HTMLElement {
   }
 
   _render() {
-    const borderRadius = this._getBorderRadius()
-    const text = this._getAvatarText()
-    const textWeight = this.textWeight
-    const textScale = this.textScale
-    const textColor = this.textColor
-    const backgroundColor = this.backgroundColor
-
     this.shadowContainerElement = document.createElement('div')
     this.shadowTextElement = document.createElement('div')
 
@@ -94,21 +88,21 @@ class AvatarInitials extends HTMLElement {
     this.shadowContainerElement.style.justifyContent = 'center'
     this.shadowContainerElement.style.alignItems = 'center'
     this.shadowContainerElement.style.boxSizing = 'border-box'
-    this.shadowContainerElement.style.border = `1px solid black`
-    this.shadowContainerElement.style.backgroundColor = backgroundColor
+    this.shadowContainerElement.style.border = `1px solid ${this.borderColor}`
+    this.shadowContainerElement.style.backgroundColor = this.backgroundColor
     this.shadowContainerElement.style.width = `100px`
     this.shadowContainerElement.style.height = `100px`
-    this.shadowContainerElement.style.borderRadius = `${borderRadius}`
+    this.shadowContainerElement.style.borderRadius = `${this._getBorderRadius()}`
     if (this.uppercase)
       this.shadowContainerElement.style.textTransform = 'uppercase'
 
     this.shadowTextElement.style.color = '#1a1a1a'
     this.shadowTextElement.style.fontFamily = 'sans-serif'
-    this.shadowTextElement.style.fontWeight = textWeight
-    this.shadowTextElement.style.transform = `scale(${textScale})`
-    this.shadowTextElement.style.color = textColor
+    this.shadowTextElement.style.fontWeight = this.textWeight
+    this.shadowTextElement.style.transform = `scale(${this.textScale})`
+    this.shadowTextElement.style.color = this.textColor
 
-    this.shadowTextElement.innerText = text
+    this.shadowTextElement.innerText = this._getAvatarText()
 
     this.shadowContainerElement.appendChild(this.shadowTextElement)
     this.shadow.appendChild(this.shadowContainerElement)
@@ -126,7 +120,8 @@ class AvatarInitials extends HTMLElement {
       textScale: '2',
       textColor: '#FFF',
       textLength: null,
-      backgroundColor: '#000'
+      backgroundColor: '#959595',
+      borderColor: '#555555'
     }
     this._render()
   }
@@ -159,6 +154,8 @@ class AvatarInitials extends HTMLElement {
         return (this._textLength = newValue)
       case 'background-color':
         return (this._backgroundColor = newValue)
+      case 'border-color':
+        return (this._borderColor = newValue)
     }
   }
 
@@ -202,6 +199,10 @@ class AvatarInitials extends HTMLElement {
     return this._backgroundColor || this.defaultAttributes.backgroundColor
   }
 
+  get borderColor() {
+    return this._borderColor || this.defaultAttributes.borderColor
+  }
+
   set initials(value) {
     this.setAttribute('initials', value)
   }
@@ -240,6 +241,10 @@ class AvatarInitials extends HTMLElement {
 
   set backgroundColor(value) {
     this.setAttribute('background-color', value)
+  }
+
+  set borderColor(value) {
+    this.setAttribute('border-color', value)
   }
 }
 
