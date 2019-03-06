@@ -17,50 +17,51 @@
 
 */
 
+function shortenInitials(initials) {
+  return initials.substring(0, 3)
+}
+
+function getInitialsFromString(string) {
+  return string
+    .split(/ |-/)
+    .map(value => value.charAt(0))
+    .join('')
+}
+
 class AvatarInitials extends HTMLElement {
   constructor() {
     super()
 
     this.shadow = this.attachShadow({ mode: 'open' })
     this.defaultAttributes = {
-      initials: 'AB',
-      string: 'John Smith Adam Lol'
+      initials: 'ABC',
+      string: 'John Smith Adam',
+      rounded: false
     }
   }
 
   static get observedAttributes() {
-    return ['initials']
+    return ['initials', 'string']
   }
 
-  _hasInitials() {
+  hasInitials() {
     return this.hasAttribute('initials')
   }
 
-  _hasString() {
+  hasString() {
     return this.hasAttribute('string')
   }
 
   connectedCallback() {
+    console.log(this)
     this.render()
   }
 
-  setAttributes() {
-    this.setAttribute('initials', this.initials)
-  }
-
-  shortenInitials(initials) {
-    return initials.substring(0, 3)
-  }
-
-  getInitialsFromString() {
-    return this.string
-      .split(' ')
-      .map(value => value.charAt(0))
-      .join('')
-  }
-
   getText() {
-    // TODO initials vs string priority
+    if (!this.hasInitials() && this.hasString()) {
+      return shortenInitials(getInitialsFromString(this.string))
+    }
+    return shortenInitials(this.initials)
   }
 
   render() {
@@ -96,7 +97,6 @@ class AvatarInitials extends HTMLElement {
   `
 
     this.shadow.appendChild(template.content.cloneNode(true))
-    this.setAttributes()
   }
 
   get initials() {
