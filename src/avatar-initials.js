@@ -123,7 +123,7 @@ class AvatarInitials extends HTMLElement {
     this.shadowTextElement.style.color = this.textColor
     if (this._isUppercase())
       this.shadowTextElement.style.textTransform = 'uppercase'
-
+    this.shadowTextElement.style.fontSize = '22px'
     this.shadowTextElement.innerText = this._getAvatarText()
 
     this.shadowContainerElement.appendChild(this.shadowTextElement)
@@ -134,7 +134,7 @@ class AvatarInitials extends HTMLElement {
     this.defaultAttributes = {
       initials: 'ab',
       string: 'john smith',
-      size: 70,
+      size: 60,
       rounded: false,
       cornerRadius: 0,
       uppercase: false,
