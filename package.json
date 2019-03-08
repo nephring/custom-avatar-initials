@@ -1,0 +1,14 @@
+{
+  "name": "custom-avatar-initials",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:nephring/custom-avatar-initials.git",
+  "author": "Nephring <nephring@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "jest": "^24.3.1"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}
