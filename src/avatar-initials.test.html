@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script type="text/javascript" src="avatar-initials.js"></script>
+  </head>
+  <body></body>
+  <script>
+    function test(title, callback) {
+      try {
+        callback()
+        console.log(
+          `✔️ %cPASSED %c${title}`,
+          'color: green',
+          'color: grey; font-size: 14px;'
+        )
+      } catch (error) {
+        console.log(
+          `❌ %cFAIL %c${title}`,
+          'color: red',
+          'color: grey; font-size: 14px;'
+        )
+        console.error(error)
+      }
+    }
+
+    function expect(result) {
+      return {
+        toBe(expected) {
+          if (result !== expected) {
+            throw new Error(
+              `The result of ${result} is not equal to expected: ${expected}`
+            )
+          }
+        }
+      }
+    }
+
+    test('example', () => {})
+  </script>
+</html>
