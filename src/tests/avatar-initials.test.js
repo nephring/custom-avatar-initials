@@ -387,10 +387,10 @@ test('avatar element should display correct text and shape, when available attri
   const container = document.getElementById('avatars')
   const avatar = document.createElement('avatar-initials')
   const attributes = {
-    initials: 'XY',
+    initials: 'xyz',
     string: 'John Hendrix-Smith',
     size: 100,
-    rounded: true,
+    rounded: false,
     cornerRadius: 30,
     uppercase: true,
     textWeight: 400,
@@ -450,5 +450,19 @@ test('avatar element should display correct text and shape, when available attri
   expect(avatar.attributes['border-color'].value).toBe(attributes.borderColor)
   expect(avatar.attributes['auto-color'].value).toBe(
     attributes.autoColor.toString()
+  )
+  expect(textElement.innerText).toBe(
+    attributes.initials.toUpperCase().substr(0, attributes.textLength)
+  )
+  expect(textElement.innerText.length).toBe(attributes.textLength)
+  expect(textElement.style.transform).toBe(`scale(${attributes.textScale})`)
+  expect(textElement.style.color).toBe(attributes.textColor)
+  expect(textElement.style.fontWeight).toBe(attributes.textWeight.toString())
+  expect(shapeElement.style.width).toBe(`${attributes.size}px`)
+  expect(shapeElement.style.height).toBe(`${attributes.size}px`)
+  expect(shapeElement.style.borderRadius).toBe(`${attributes.cornerRadius}px`)
+  expect(shapeElement.style.backgroundColor).toBe(attributes.backgroundColor)
+  expect(shapeElement.style.border).toBe(
+    `${attributes.border}px solid ${attributes.borderColor}`
   )
 })
