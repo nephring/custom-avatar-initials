@@ -100,7 +100,7 @@ class AvatarInitials extends HTMLElement {
 
   _render() {
     this.shadowContainerElement = document.createElement('div')
-    this.shadowContainerElement.setAttribute('id', 'container')
+    this.shadowContainerElement.setAttribute('id', 'shape')
     this.shadowTextElement = document.createElement('div')
     this.shadowTextElement.setAttribute('id', 'text')
 
