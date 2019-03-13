@@ -55,7 +55,7 @@ class AvatarInitials extends HTMLElement {
     return this.hasAttribute('text-length') && this.textLength
   }
 
-  _getInitialsFromString = string => {
+  _getInitialsFromString(string) {
     return string
       .split(/ |-/)
       .map(value => value.charAt(0))
@@ -100,7 +100,9 @@ class AvatarInitials extends HTMLElement {
 
   _render() {
     this.shadowContainerElement = document.createElement('div')
+    this.shadowContainerElement.setAttribute('id', 'container')
     this.shadowTextElement = document.createElement('div')
+    this.shadowTextElement.setAttribute('id', 'text')
 
     this.shadowContainerElement.style.display = 'flex'
     this.shadowContainerElement.style.justifyContent = 'center'
