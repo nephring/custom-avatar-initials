@@ -119,7 +119,6 @@ class AvatarInitials extends HTMLElement {
     this.shadowContainerElement.style.height = `${this.size}px`
     this.shadowContainerElement.style.borderRadius = `${this._getBorderRadius()}`
 
-    this.shadowTextElement.style.fontFamily = 'sans-serif'
     this.shadowTextElement.style.fontWeight = this.textWeight
     this.shadowTextElement.style.transform = `scale(${this.textScale})`
     this.shadowTextElement.style.color = this.textColor
