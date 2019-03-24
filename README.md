@@ -63,12 +63,11 @@ Selected attributes set.
   background-color="#e67e22"
 >
 </avatar-initials>
->
 ```
 
 ## Tests
 
-Tests are written without any external libraries. Just run `avatar-initials.test.html` located in `/tests` directory with your favourite browser and see results!
+Tests are written without any external libraries. Just open `avatar-initials.test.html` located in `/tests` directory with your favourite browser and see results!
 
 ## Browser support
 
@@ -76,3 +75,5 @@ Tests are written without any external libraries. Just run `avatar-initials.test
 - Firefox (since v63)
 
 ## License
+
+ISC License
