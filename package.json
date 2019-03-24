@@ -1,8 +1,19 @@
 {
   "name": "custom-avatar-initials",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Web Components Custom Element library for generating fully customizable user avatar initials.",
+  "main": "src/avatar-initials.js",
   "repository": "git@github.com:nephring/custom-avatar-initials.git",
+  "homepage": "https://github.com/nephring/custom-avatar-initials",
+  "keywords": [
+    "avatar",
+    "initials",
+    "custom-avatar-initials",
+    "custom-element",
+    "custom element",
+    "web-components",
+    "web components"
+  ],
   "author": "Nephring <nephring@gmail.com>",
-  "license": "MIT"
+  "license": "ISC"
 }
