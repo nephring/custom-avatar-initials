@@ -71,8 +71,12 @@ Tests are written without any external libraries. Just open `avatar-initials.tes
 
 ## Browser support
 
-- Chrome (since v67)
-- Firefox (since v63)
+Web Components works in all majors browsers:
+
+- Chrome
+- Firefox
+- Opera
+- Safari
 
 ## License
 
